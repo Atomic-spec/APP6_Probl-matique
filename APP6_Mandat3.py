@@ -1,4 +1,3 @@
-from http.cookies import BaseCookie
 
 from APP_6_Mandat_1 import*
 from APP6_Mandat_2 import *
@@ -75,7 +74,7 @@ DC = 1
 MA = np.array(([AC,BC],[CC,DC]), dtype=complex)
 
 
-#Matrice de compensateur
+################################Matrice de compensateur#####################################
 kc = 0.1
 kc_array = np.array([0.0,0.1,0.2,0.3,0.4,0.5,0.6,0.7])
 
@@ -85,7 +84,7 @@ Zc_k = kc_array[k_index]
 
 MC = np.array(([1,Zc_k],[0,1]), dtype =complex )
 
-# Calcul de Matrice Alternateur * Matrice T
+########################### Calcul de Matrice Alternateur * Matrice T#######################
 print("début\n")
 M1 = np.dot(MA,MT)
 M2 = np.dot(M1,MP)
@@ -99,29 +98,29 @@ print("-----------------------------------------------------------\n")
 
 #Calcul de Puissance
 print("----------------Calcul de Puissance------------------------\n")
-P = 3*VB3*IB3*FP
+P = Sil
 print("La valeur de la puissance est de:",P/1000,"kW")
 print("-----------------------------------------------------------\n")
 
 
-#Calcul de Eg
+#####################################Calcul de Eg##########################################
 
 aa = 230000**2
-bb = M3[0][0]
-cc = M3[0][1]
-dd = M3[1][0]
-ee = M3[1][1]
+bb = (M3[0][0]).real
+cc = ((M3[0][1]).real)*P
+dd = (M3[0][0]).imag
+ee = ((M3[0][1]).imag)*P
 x = symbols('x',positive=True)          #sélectionne univquement les valeurs réelle positive
-sol = solve(aa-((bb*x)-cc/(x))**2 - ((dd*x)+ee/(x))**2, x)
-
-print("-----------------------Calcul de Eg------------------------\n")
+sol = solve(aa-(((bb*x)-cc/(x))**2 - ((dd*x)+ee/(x))**2), x)
+#sol = solve((((bb*x)+cc*P/(3*x))-aa),x)
+print("-------------------Calcul de VB3 pour Eg--------------------\n")
 
 print(sol)
 print(0.8*Sil)
 if not sol:
     print("No solution")
 else:
-    LaBonneSolution = sol[1]            #avec 0.8xSIL j'ai repéré que c'est la 2e valeur du tableau qui est la bonne
+    LaBonneSolution = sol[0]            #avec 0.8xSIL j'ai repéré que c'est la 2e valeur du tableau qui est la bonne
     print("Avec 0.8xSIL j'ai repéré que c'est la 2e valeur du tableau qui est la bonne et je fais les calculs avec la bonne solution\n")
     print("La bonne solution est:",LaBonneSolution)
     print("LaBonneSolution x2=", LaBonneSolution*2)

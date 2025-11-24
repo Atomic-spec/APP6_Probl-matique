@@ -21,7 +21,7 @@ GMR0_prime = GMR0*0.7788
 GMR_prime = (GMR0_prime*d**3)**(1/4)
 L1_m = (2*10**-7)*np.log(GMD/GMR_prime)     #En Henry/mètre
 L1 = L1_m * l*1000
-print("\n------------------------Calcul de L1-------------------------------\n")
+print("\n------------------------Calcul de L1-----------------------------\n")
 print("La valeur de L1 en H/m est:",L1_m,"H/m")
 print("La valeur de L1 est:",L1,"H")
 print("-------------------------------------------------------------------\n")
