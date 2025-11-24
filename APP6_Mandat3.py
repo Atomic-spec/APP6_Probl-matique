@@ -55,10 +55,10 @@ print("La valeur de Ltm =",Ltm, "et Xm =",Xm)
 print("La valeur de Rm équivalente est de:", Rm_équi,"ohm")
 print("-----------------------------------------------------------\n")
 
-#Calcul Matriciel avec Circuit en T
+#Calcul Matriciel avec Circuit en T transformateur
 print("--------------Calcul de matrice de réseau------------------\n")
-Zt1 = Rt1 + X1
-Zt2 = Rt2 + X2
+Zt1 = (Rt1**2 + X1**2)**0.5
+Zt2 = (Rt2**2 + X2**2)**0.5#Rt2 + X2
 Yt = Rm_équi
 Am = (1+(Yt*Zt1))
 Bm = (Zt1+Zt2+(Yt*Zt1*Zt2))
@@ -105,13 +105,13 @@ print("-----------------------------------------------------------\n")
 
 #####################################Calcul de Eg##########################################
 
-aa = 230000**2
+EG_v = (230000**2)/3
 bb = (M3[0][0]).real
 cc = ((M3[0][1]).real)*P
 dd = (M3[0][0]).imag
 ee = ((M3[0][1]).imag)*P
 x = symbols('x',positive=True)          #sélectionne univquement les valeurs réelle positive
-sol = solve(aa-(((bb*x)-cc/(x))**2 - ((dd*x)+ee/(x))**2), x)
+sol = solve(EG_v-(((bb*x)-cc/(x))**2 - ((dd*x)+ee/(x))**2), x)
 #sol = solve((((bb*x)+cc*P/(3*x))-aa),x)
 print("-------------------Calcul de VB3 pour Eg--------------------\n")
 
@@ -121,8 +121,6 @@ if not sol:
     print("No solution")
 else:
     LaBonneSolution = sol[0]            #avec 0.8xSIL j'ai repéré que c'est la 2e valeur du tableau qui est la bonne
-    print("Avec 0.8xSIL j'ai repéré que c'est la 2e valeur du tableau qui est la bonne et je fais les calculs avec la bonne solution\n")
     print("La bonne solution est:",LaBonneSolution)
-    print("LaBonneSolution x2=", LaBonneSolution*2)
 
 print("-----------------------------------------------------------\n")
