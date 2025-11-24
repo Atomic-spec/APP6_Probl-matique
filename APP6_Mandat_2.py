@@ -22,6 +22,7 @@ Y = (2*np.pi*f*C1)*1j
 A = D_mat = 1 + (Z*Y)/2
 B = Z
 C = Y*(1 + ((Z*Y)/4))
+MP = np.array(([A,B],[C,D]), dtype=complex)
 
 Vr = (V_nominal/np.sqrt(3))*1000
 Ir = (Sil/(np.sqrt(3)*V_nominal))/1000

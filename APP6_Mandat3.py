@@ -57,6 +57,7 @@ print("La valeur de Rm équivalente est de:", Rm_équi,"ohm")
 print("-----------------------------------------------------------\n")
 
 #Calcul Matriciel avec Circuit en T
+print("--------------Calcul de matrice de réseau------------------\n")
 Zt1 = Rt1 + X1
 Zt2 = Rt2 + X2
 Yt = Rm_équi
@@ -64,28 +65,36 @@ Am = (1+(Yt*Zt1))
 Bm = (Zt1+Zt2+(Yt*Zt1*Zt2))
 Cm = Yt
 Dm = (1+Yt*Zt2)
-MT = np.array([Am,Bm],[Cm,Dm])
+MT = np.array(([Am,Bm],[Cm,Dm]), dtype=complex)
 
 #Matrice alternateur
 AC = 1
 BC = 0
 CC = 0
 DC = 1
-MC = np.array([AC,BC],[CC,DC])
+MA = np.array(([AC,BC],[CC,DC]), dtype=complex)
 
 
 #Matrice de compensateur
 kc = 0.1
-kc_array = numpy.array([0.0,0.1,0.2,0.3,0.4,0.5,0.6,0.7])
+kc_array = np.array([0.0,0.1,0.2,0.3,0.4,0.5,0.6,0.7])
 
 #Index
-k_index = numpy.where(kc_array == kc)[0][0]
+k_index = np.where(kc_array == kc)[0][0]
 Zc_k = kc_array[k_index]
 
-MA = numpy.array(([1,Zc_k],[0,1]), dtype =complex )
+MC = np.array(([1,Zc_k],[0,1]), dtype =complex )
 
-
-
+# Calcul de Matrice Alternateur * Matrice T
+print("début\n")
+M1 = np.dot(MA,MT)
+M2 = np.dot(M1,MP)
+M3 = np.dot(M2,MC)
+print("La matrice 1 est:\n",M1,"\n")
+print("La matrice 2 est:\n",M2,"\n")
+print("La matrice de réseau est:\n",M3,"\n")
+print("fini")
+print("-----------------------------------------------------------\n")
 
 
 #Calcul de Puissance
@@ -95,26 +104,17 @@ print("La valeur de la puissance est de:",P/1000,"kW")
 print("-----------------------------------------------------------\n")
 
 
+#Calcul de Eg
 
-
-
-
-
-
-
-
-"""
-aa = 2.6456e+11
-bb = 0.0045
-cc = 4.6427e+10
-dd = 1.1256
-ee = 1.615e+9
+aa = 230000**2
+bb = M3[0][0]
+cc = M3[0][1]
+dd = M3[1][0]
+ee = M3[1][1]
 x = symbols('x',positive=True)          #sélectionne univquement les valeurs réelle positive
 sol = solve(aa-((bb*x)-cc/(x))**2 - ((dd*x)+ee/(x))**2, x)
 
-
-
-print("--------------Calcul de LaBonneSolution--------------------\n")
+print("-----------------------Calcul de Eg------------------------\n")
 
 print(sol)
 print(0.8*Sil)
@@ -127,4 +127,3 @@ else:
     print("LaBonneSolution x2=", LaBonneSolution*2)
 
 print("-----------------------------------------------------------\n")
-"""
