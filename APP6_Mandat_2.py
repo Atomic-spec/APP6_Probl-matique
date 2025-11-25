@@ -3,7 +3,7 @@ from APP_6_Mandat_1 import*
 
 
 #Calcul de Zc
-Zc = (Xl/B)**0.5
+Zc = np.sqrt(L1/C1)
 print("-------------------------Calcul de Zc------------------------------\n")
 print("La valeur de Zc en ohm est:",Zc,"Ohm")
 print("-------------------------------------------------------------------\n")

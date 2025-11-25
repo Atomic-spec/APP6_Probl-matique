@@ -58,7 +58,7 @@ print("-----------------------------------------------------------\n")
 #Calcul Matriciel avec Circuit en T transformateur
 print("--------------Calcul de matrice de réseau------------------\n")
 Zt1 = (Rt1**2 + X1**2)**0.5
-Zt2 = (Rt2**2 + X2**2)**0.5#Rt2 + X2
+Zt2 = (Rt2**2 + X2**2)**0.5
 Yt = Rm_équi
 Am = (1+(Yt*Zt1))
 Bm = (Zt1+Zt2+(Yt*Zt1*Zt2))
@@ -78,9 +78,7 @@ MA = np.array(([AC,BC],[CC,DC]), dtype=complex)
 kc = 0.1
 kc_array = np.array([0.0,0.1,0.2,0.3,0.4,0.5,0.6,0.7])
 
-#Index
-k_index = np.where(kc_array == kc)[0][0]
-Zc_k = kc_array[k_index]
+Zc_k = Xl*kc
 
 MC = np.array(([1,Zc_k],[0,1]), dtype =complex )
 
