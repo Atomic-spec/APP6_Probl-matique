@@ -3,14 +3,14 @@ from APP_6_Mandat_1 import*
 
 
 #Calcul de Zc
-Zc = (Xl/B)**0.5
+Zc = (L1_m/C1_m)**0.5
 print("-------------------------Calcul de Zc------------------------------\n")
 print("La valeur de Zc en ohm est:",Zc,"Ohm")
 print("-------------------------------------------------------------------\n")
 
 #Calcul de Snominal
-Sil = (((V_nominal*1000)/np.sqrt(3))**2)/Zc
-print("----------------------Calcul de SIL--------------------------\n")
+Sil = (V_nominal**2)/Zc#204e6
+print("--------------------------Calcul de SIL----------------------------\n")
 print("La valeur de SIL en VA est:",Sil,"VA")
 print("-------------------------------------------------------------------\n")
 
@@ -21,11 +21,13 @@ Z = 2.994 + 79.17j
 Y = (2*np.pi*f*C1)*1j
 A = D_mat = 1 + (Z*Y)/2
 B = Z
-C = Y*(1 + ((Z*Y)/4))
+C = Y+(Y/2)**2 *Z
 MP = np.array(([A,B],[C,D]), dtype=complex)
+print("Y:",Y,"\tZ",Z)
+Bp = np.abs(B)
 
-Vr = (V_nominal/np.sqrt(3))*1000
-Ir = (Sil/(np.sqrt(3)*V_nominal))/1000
+Vr = (V_nominal/np.sqrt(3))
+Ir = (Sil/(np.sqrt(3)*V_nominal))
 
 VA = Vr*A
 VB = B*Ir
@@ -36,7 +38,7 @@ delta_degree = delta*360/(2*np.pi)
 Vsll = Vs_mod*np.sqrt(3)
 
 
-
+print("La valeur de A en pu est:",Bp)
 print("La valeur de Vs en V est:",Vs,"V")
 print("La valeur de Vs est de:", Vs_mod,"avec un angle de déphasage de", delta_degree)
 print("La valeur de Vs ligne-ligne est de:", Vsll,"V")
